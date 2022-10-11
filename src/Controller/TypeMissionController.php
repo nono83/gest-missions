@@ -186,7 +186,7 @@ class TypeMissionController extends AbstractController
         $typeMission = $typeMissionRepository->findOneBy(['id' => $id]);
         if (!$typeMission) {
             throw $this->createNotFoundException(
-                'Aucun statut pour l\'id: ' . $id
+                'Aucun type de mission pour l\'id: ' . $id
             );
         }
 
@@ -214,7 +214,7 @@ class TypeMissionController extends AbstractController
         $typeMission = $typeMissionRepository->findOneBy(['id' => $id]);
         if (!$typeMission) {
             throw $this->createNotFoundException(
-                'Aucun statut pour l\'id: ' . $id
+                'Aucun type de mission pour l\'id: ' . $id
             );
         }
 
