@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Statut{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un nouveau statut</h1>
+
+    {{ include('statut/_form.html.twig') }}
+
+    <a href="{{ path('app_statut_index') }}">Retour à la liste</a>
+{% endblock %}

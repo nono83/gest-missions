@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour du statut{% endblock %}
+
+{% block content %}
+    <h1>Mise à jour du statut</h1>
+
+    {{ include('statut/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_statut_index') }}">Retour à la liste</a>
+
+
+{% endblock %}
