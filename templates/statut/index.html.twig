@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des statuts{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+    /* Déplace les balises tfoot en faut du datatable */
+    tfoot {
+        display: table-header-group;
+    }
+    </style>
+{% endblock %}
 
 {% block content %}
     <div class="container-fluid">

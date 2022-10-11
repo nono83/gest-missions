@@ -17,15 +17,14 @@ class StatutType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'help' => "Le nom du statut",
-                'label' => 'Titre*',
+                'label' => 'Statut*',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut être vide'
                     ])
                 ]
             ]
-            )
-        ;
+            );
     }
     
 
