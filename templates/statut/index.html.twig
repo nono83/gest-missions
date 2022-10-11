@@ -4,6 +4,10 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+    /* Cache la zone de recherche par défaut de la datatable*/
+    .dataTables_filter {
+        display: none;
+    }
     /* Déplace les balises tfoot en faut du datatable */
     tfoot {
         display: table-header-group;
@@ -86,7 +90,7 @@
                         { "name": "id",   "targets": 0 },
                         { "name": "nom",   "targets": 1 }, 
                         { "name": "action",   "targets": 2,"render": function ( data, type, row ) {
-                         return '<a href="/statut/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet élément ?\');reloadDatatables();">Supprimer</a>&nbsp&nbsp<a href="/statut/edit/' + row[0] + '" role="button" class="btn btn-info">Modifier</a>';
+                         return '<a href="/statut/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();">Supprimer</a>&nbsp&nbsp<a href="/statut/edit/' + row[0] + '" role="button" class="btn btn-info">Modifier</a>';
                         } }, 
                     ],
                      // parametres Server-side 
@@ -113,10 +117,10 @@
                         "zeroRecords": "Aucun enregistrement ",
                         "info": "Page _PAGE_ sur _PAGES_",
                         "infoEmpty": "Aucun enregistrement disponible",
-                        "infoFiltered": "(filtered from _MAX_ total records)",
+                        "infoFiltered": "(Filtrés sur _MAX_ enregistrements total)",
                         "loadingRecords": "Chargement...",
                         "search": "Recherche:",
-                        "zeroRecords":    "No matching records found",
+                        "zeroRecords":    "Aucun enregistrement trouvé",
                         "paginate": {
                             "first": "Premier",
                             "last":  "Dernier",
