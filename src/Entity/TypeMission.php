@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TypeMissionRepository;
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +23,11 @@ class TypeMission
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Ce nom est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom ne peut être vide.")
      */
     private $nom;
 

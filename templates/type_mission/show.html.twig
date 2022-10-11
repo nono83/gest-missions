@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeMission{% endblock %}
+
+{% block body %}
+    <h1>TypeMission</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_mission.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ type_mission.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_mission_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_type_mission_edit', {'id': type_mission.id}) }}">Editer</a>
+
+    {{ include('type_mission/_delete_form.html.twig') }}
+{% endblock %}

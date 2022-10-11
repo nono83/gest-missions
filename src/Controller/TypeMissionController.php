@@ -2,35 +2,34 @@
 
 namespace App\Controller;
 
-use App\Entity\Statut;
-use App\Form\StatutType;
-use App\Repository\StatutRepository;
+use App\Entity\TypeMission;
+use App\Form\TypeMissionType;
+use App\Repository\TypeMissionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
 /**
- * @Route("/statut")
+ * @Route("/type-mission")
  */
-class StatutController extends AbstractController
+class TypeMissionController extends AbstractController
 {
     /**
-     * @Route("/", name="app_statut_index")
+     * @Route("/", name="app_type_mission_index", methods={"GET"})
      */
-    public function index(StatutRepository $statutRepository): Response
+    public function index(TypeMissionRepository $typeMissionRepository): Response
     {
-        return $this->render('statut/index.html.twig', [
-            'statuts' => $statutRepository->findAll(),
+        return $this->render('type_mission/index.html.twig', [
+            'type_missions' => $typeMissionRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/list_datatables", name="app_statut_list_datatables")
+     * @Route("/list_datatables", name="app_type_mission_list_datatables")
      */
-    public function listDatatablesAction(Request $request,StatutRepository $statutRepository): Response
+    public function listDatatablesAction(Request $request,TypeMissionRepository $typeMissionRepository): Response
     {
         // Get the parameters from DataTable Ajax Call
         if ($request->getMethod() == 'POST')
@@ -60,12 +59,12 @@ class StatutController extends AbstractController
         $otherConditions = "array or whatever is needed";
 
         // Get results from the Repository
-        $results = $statutRepository->getRequiredDTData($start, $length, $orders, $search, $columns, $otherConditions = null);
+        $results = $typeMissionRepository->getRequiredDTData($start, $length, $orders, $search, $columns, $otherConditions = null);
       
         // Returned objects are of type Town
         $objects = $results["results"];
         // Get total number of objects
-        $total_objects_count = $statutRepository->countStatuts();
+        $total_objects_count = $typeMissionRepository->countStatuts();
         // Get total number of results
         $selected_objects_count = count($objects);
         // Get total number of filtered data
@@ -147,84 +146,82 @@ class StatutController extends AbstractController
 
     }
 
-   
-
     /**
-     * @Route("/new", name="app_statut_new", methods={"GET", "POST"})
+     * @Route("/new", name="app_type_mission_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, StatutRepository $statutRepository): Response
+    public function new(Request $request, TypeMissionRepository $typeMissionRepository): Response
     {
-        $statut = new Statut();
-        $form = $this->createForm(StatutType::class, $statut);
+        $typeMission = new TypeMission();
+        $form = $this->createForm(TypeMissionType::class, $typeMission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $statutRepository->add($statut, true);
+            $typeMissionRepository->add($typeMission, true);
 
-            return $this->redirectToRoute('app_statut_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_type_mission_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('statut/new.html.twig', [
-            'statut' => $statut,
+        return $this->renderForm('type_mission/new.html.twig', [
+            'type_mission' => $typeMission,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{id}", requirements={"id"="\d+"}, name="app_statut_show", methods={"GET"})
+     * @Route("/{id}", name="app_type_mission_show", methods={"GET"})
      */
-    public function show(Statut $statut): Response
+    public function show(TypeMission $typeMission): Response
     {
-        return $this->render('statut/show.html.twig', [
-            'statut' => $statut,
+        return $this->render('type_mission/show.html.twig', [
+            'type_mission' => $typeMission,
         ]);
     }
 
     /**
-     * @Route("/edit/{id}", requirements={"id"="\d+"}, methods={"GET", "POST"}, name="app_statut_edit")
+     * @Route("/edit/{id}", requirements={"id"="\d+"}, methods={"GET", "POST"},name="app_type_mission_edit")
      */
-    public function edit(Request $request, int $id, StatutRepository $statutRepository): Response
+    public function edit(Request $request, int $id, TypeMissionRepository $typeMissionRepository): Response
     {
         //A mettre en commentaire si appel au paramconverter config/packages/sensio_framework_extra.yaml
-        $statut = $statutRepository->findOneBy(['id' => $id]);
-        if (!$statut) {
+        $typeMission = $typeMissionRepository->findOneBy(['id' => $id]);
+        if (!$typeMission) {
             throw $this->createNotFoundException(
                 'Aucun statut pour l\'id: ' . $id
             );
         }
 
-        $form = $this->createForm(StatutType::class, $statut);
+        $form = $this->createForm(TypeMissionType::class, $typeMission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $statutRepository->add($statut, true);
+            $typeMissionRepository->add($typeMission, true);
 
-            return $this->redirectToRoute('app_statut_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_type_mission_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('statut/edit.html.twig', [
-            'statut' => $statut,
+        return $this->renderForm('type_mission/edit.html.twig', [
+            'type_mission' => $typeMission,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/remove/{id}",requirements={"id"="\d+"}, name="app_statut_delete")
+     * @Route("/remove/{id}", requirements={"id"="\d+"}, methods={"GET", "POST"},name="app_type_mission_delete")
      */
-    public function delete(Request $request, int $id, StatutRepository $statutRepository): Response
+    public function delete(Request $request, int $id, TypeMissionRepository $typeMissionRepository): Response
     {
         //A mettre en commentaire si appel au paramconverter config/packages/sensio_framework_extra.yaml
-        $statut = $statutRepository->findOneBy(['id' => $id]);
-        if (!$statut) {
+        $typeMission = $typeMissionRepository->findOneBy(['id' => $id]);
+        if (!$typeMission) {
             throw $this->createNotFoundException(
                 'Aucun statut pour l\'id: ' . $id
             );
         }
 
-        //if ($this->isCsrfTokenValid('delete'.$statut->getId(), $request->request->get('_token'))) {
-            $statutRepository->remove($statut, true);
+        //if ($this->isCsrfTokenValid('delete'.$typeMission->getId(), $request->request->get('_token'))) {
+            $typeMissionRepository->remove($typeMission, true);
         //}
 
-        return $this->redirectToRoute('app_statut_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_type_mission_index', [], Response::HTTP_SEE_OTHER);
     }
 }
