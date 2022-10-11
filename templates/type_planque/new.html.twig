@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un type de planque{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un type de planque</h1>
+
+    {{ include('type_planque/_form.html.twig') }}
+
+    <a href="{{ path('app_type_planque_index') }}">Retour à la liste</a>
+{% endblock %}

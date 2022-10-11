@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type de planque{% endblock %}
+
+{% block body %}
+    <h1>Type de planque</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_planque.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ type_planque.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_planque_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_type_planque_edit', {'id': type_planque.id}) }}">Editer</a>
+
+    {{ include('type_planque/_delete_form.html.twig') }}
+{% endblock %}
