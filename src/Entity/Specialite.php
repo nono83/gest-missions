@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\SpecialiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,13 +23,14 @@ class Specialite
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Ce titre est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom ne peut être vide.")
      */
     private $nom;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Agent::class, mappedBy="specialite")
-     */
-    private $agents;
 
     /**
      * @ORM\OneToMany(targetEntity=AgentSpecialite::class, mappedBy="specialite")
@@ -41,7 +44,6 @@ class Specialite
 
     public function __construct()
     {
-        $this->agents = new ArrayCollection();
         $this->agentSpecialites = new ArrayCollection();
         $this->missions = new ArrayCollection();
     }

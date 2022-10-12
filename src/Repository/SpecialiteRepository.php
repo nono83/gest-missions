@@ -39,6 +39,106 @@ class SpecialiteRepository extends ServiceEntityRepository
         }
     }
 
+     // Get the total number of elements
+     public function countSpecialite()
+     {
+         return $this
+             ->createQueryBuilder('specialite')
+             ->select("count(specialite.id)")
+             ->getQuery()
+             ->getSingleScalarResult();
+     }
+ 
+     public function getRequiredDTData($start, $length, $orders, $search, $columns, $otherConditions)
+     {
+         // Create Main Query
+         $query = $this->createQueryBuilder('specialite');
+         
+         // Create Count Query
+         $countQuery = $this->createQueryBuilder('specialite');
+         $countQuery->select('COUNT(specialite)');
+         
+         // Other conditions than the ones sent by the Ajax call ?
+         if ($otherConditions === null)
+         {
+             // No
+             // However, add a "always true" condition to keep an uniform treatment in all cases
+             $query->where("1=1");
+             $countQuery->where("1=1");
+         }
+         else
+         {
+             // Add condition
+             $query->where($otherConditions);
+             $countQuery->where($otherConditions);
+         }
+         
+         // Fields Search
+         foreach ($columns as $key => $column)
+         {
+             if ($column['search']['value'] != '')
+             {
+                 // $searchItem is what we are looking for
+                 $searchItem = $column['search']['value'];
+                 $searchQuery = null;
+         
+                 // $column['name'] is the name of the column as sent by the JS
+                 switch($column['name'])
+                 {
+                     case 'nom':
+                     {
+                         $searchQuery = 'specialite.nom LIKE \'%'.$searchItem.'%\'';
+                         break;
+                     }
+                   
+                 }
+         
+                 if ($searchQuery !== null)
+                 {
+                     $query->andWhere($searchQuery);
+                     $countQuery->andWhere($searchQuery);
+                 }
+             }
+         }
+         
+         // Limit
+         $query->setFirstResult($start)->setMaxResults($length);
+         
+         // Order
+         foreach ($orders as $key => $order)
+         {
+             // $order['name'] is the name of the order column as sent by the JS
+             if ($order['name'] != '')
+             {
+                 $orderColumn = null;
+             
+                 switch($order['name'])
+                 {
+                     case 'nom':
+                     {
+                         $orderColumn = 'specialite.nom';
+                         break;
+                     }
+                    
+                 }
+         
+                 if ($orderColumn !== null)
+                 {
+                     $query->orderBy($orderColumn, $order['dir']);
+                 }
+             }
+         }
+         
+         // Execute
+         $results = $query->getQuery()->getResult();
+         $countResult = $countQuery->getQuery()->getSingleScalarResult();
+         
+         return array(
+             "results" 		=> $results,
+             "countResult"	=> $countResult
+         );
+     }
+
 //    /**
 //     * @return Specialite[] Returns an array of Specialite objects
 //     */
