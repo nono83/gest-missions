@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\MissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,16 +23,27 @@ class Mission
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\Length(
+     *     max = 150,
+     *     maxMessage = "Ce titre est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le titre ne peut être vide.")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message = "La description ne peut être vide.")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Length(
+     *     max = 100,
+     *     maxMessage = "Ce nom de code est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom de code ne peut être vide.")
      */
     private $nom_code;
 
