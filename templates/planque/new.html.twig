@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle planque{% endblock %}
+
+{% block content %}
+    <h1>Création d'une planque</h1>
+
+    {{ include('planque/_form.html.twig') }}
+
+    <a href="{{ path('app_planque_index') }}">Retour à la liste</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition de la Planque{% endblock %}
+
+{% block content %}
+    <h1>Edition de la planque</h1>
+
+    {{ include('planque/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_planque_index') }}">Retour à la liste</a>
+
+{% endblock %}

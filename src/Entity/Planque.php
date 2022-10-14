@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\PlanqueRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,17 +20,27 @@ class Planque
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+    * @ORM\Column(type="string", length=50)
+    * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Ce nom de code est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom de code ne peut être vide.")
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     max = 255,
+     *     maxMessage = "L'adresse est trop longue"
+     * )
+     * @Assert\NotBlank(message = "L'adresse ne peut être vide.")
      */
     private $adresse;
 
     /**
-     * @ORM\ManyToOne(targetEntity=typeplanque::class, inversedBy="planques")
+     * @ORM\ManyToOne(targetEntity=TypePlanque::class, inversedBy="planques")
      * @ORM\JoinColumn(nullable=false)
      */
     private $type_planque;
@@ -68,12 +80,12 @@ class Planque
         return $this;
     }
 
-    public function getTypePlanque(): ?typeplanque
+    public function getTypePlanque(): ?TypePlanque
     {
         return $this->type_planque;
     }
 
-    public function setTypePlanque(?typeplanque $type_planque): self
+    public function setTypePlanque(?TypePlanque $type_planque): self
     {
         $this->type_planque = $type_planque;
 
