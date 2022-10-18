@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AgentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,13 +21,22 @@ class Agent
      */
     private $id;
 
-    /**
+     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Le nom est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom ne peut être vide.")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Le prénom est trop long"
+     * )
      */
     private $prenom;
 
@@ -35,7 +46,12 @@ class Agent
     private $date_naissance;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Le code est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le code ne peut être vide.")
      */
     private $code_identification;
 
@@ -46,20 +62,20 @@ class Agent
     private $nationalite;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="agents")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Specialite::class, inversedBy="agents")
+     * @ORM\JoinTable(name="agent_specialite")
      */
-    private $mission;
+    private $specialites;
 
     /**
-     * @ORM\OneToMany(targetEntity=AgentSpecialite::class, mappedBy="agent")
+     * @ORM\ManyToMany(targetEntity=Mission::class, inversedBy="agents")
      */
-    private $agentSpecialites;
+    private $missions;
 
     public function __construct()
     {
-        $this->specialite = new ArrayCollection();
-        $this->agentSpecialites = new ArrayCollection();
+        $this->specialites = new ArrayCollection();
+        $this->missions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,7 +100,7 @@ class Agent
         return $this->prenom;
     }
 
-    public function setPrenom(?string $prenom): self
+    public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -127,45 +143,50 @@ class Agent
         return $this;
     }
 
-
-    public function getMission(): ?Mission
+    /**
+     * @return Collection<int, Specialite>
+     */
+    public function getSpecialites(): Collection
     {
-        return $this->mission;
+        return $this->specialites;
     }
 
-    public function setMission(?Mission $mission): self
+    public function addSpecialite(Specialite $specialite): self
     {
-        $this->mission = $mission;
+        if (!$this->specialites->contains($specialite)) {
+            $this->specialites[] = $specialite;
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialite(Specialite $specialite): self
+    {
+        $this->specialites->removeElement($specialite);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, AgentSpecialite>
+     * @return Collection<int, Mission>
      */
-    public function getAgentSpecialites(): Collection
+    public function getMissions(): Collection
     {
-        return $this->agentSpecialites;
+        return $this->missions;
     }
 
-    public function addAgentSpecialite(AgentSpecialite $agentSpecialite): self
+    public function addMission(Mission $mission): self
     {
-        if (!$this->agentSpecialites->contains($agentSpecialite)) {
-            $this->agentSpecialites[] = $agentSpecialite;
-            $agentSpecialite->setAgent($this);
+        if (!$this->missions->contains($mission)) {
+            $this->missions[] = $mission;
         }
 
         return $this;
     }
 
-    public function removeAgentSpecialite(AgentSpecialite $agentSpecialite): self
+    public function removeMission(Mission $mission): self
     {
-        if ($this->agentSpecialites->removeElement($agentSpecialite)) {
-            // set the owning side to null (unless already changed)
-            if ($agentSpecialite->getAgent() === $this) {
-                $agentSpecialite->setAgent(null);
-            }
-        }
+        $this->missions->removeElement($mission);
 
         return $this;
     }

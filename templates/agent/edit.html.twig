@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition de l'agent{% endblock %}
+
+{% block content %}
+    <h1>Edition de l'agent</h1>
+
+    {{ include('agent/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('app_agent_index') }}">Retour à la liste</a>
+
+{% endblock %}

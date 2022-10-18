@@ -39,6 +39,151 @@ class AgentRepository extends ServiceEntityRepository
         }
     }
 
+    // Get the total number of elements
+    public function countAgent()
+    {
+        return $this
+            ->createQueryBuilder('agent')
+            ->select("count(agent.id)")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getRequiredDTData($start, $length, $orders, $search, $columns, $otherConditions)
+    {
+        // Create Main Query
+        $query = $this->createQueryBuilder('agent');
+        
+        // Create Count Query
+        $countQuery = $this->createQueryBuilder('agent');
+        $countQuery->select('COUNT(agent)');
+
+        // Create inner joins
+        $query
+            ->join('agent.nationalite', 'pays')
+            ->leftJoin('agent.specialites', 'specialite')
+            ->leftJoin('agent.missions', 'mission');
+        
+        $countQuery
+            ->join('agent.nationalite', 'pays')
+            ->leftJoin('agent.specialites', 'specialite')
+            ->leftJoin('agent.missions', 'mission');
+        
+       
+        // Fields Search
+        foreach ($columns as $key => $column)
+        {
+            if ($column['search']['value'] != '')
+            {
+                // $searchItem is what we are looking for
+                $searchItem = $column['search']['value'];
+                $searchQuery = null;
+        
+                // $column['name'] is the name of the column as sent by the JS
+                switch($column['name'])
+                {
+                    case 'agent':
+                        {
+                            $searchQuery = 'agent.nom LIKE \'%'.$searchItem.'%\'';
+                            break;
+                        }
+
+                    case 'code':
+                        {
+                            $searchQuery = 'agent.code_identification LIKE \'%'.$searchItem.'%\'';
+                            break;
+                        }
+
+                    case 'nationalite':
+                        {
+                            $searchQuery = 'pays.nom LIKE \'%'.$searchItem.'%\'';
+                            break;
+                        }
+
+                    case 'specialite':
+                        {
+                            $searchQuery = 'specialite.nom LIKE \'%'.$searchItem.'%\'';
+                            break;
+                        }
+
+                    case 'mission':
+                        {
+                            $searchQuery = 'mission.titre LIKE \'%'.$searchItem.'%\'';
+                            break;
+                        }
+                  
+                }
+        
+                if ($searchQuery !== null)
+                {
+                    $query->andWhere($searchQuery);
+                    $countQuery->andWhere($searchQuery);
+                }
+            }
+        }
+        
+        // Limit
+        $query->setFirstResult($start)->setMaxResults($length);
+        
+        // Order
+        foreach ($orders as $key => $order)
+        {
+            // $order['name'] is the name of the order column as sent by the JS
+            if ($order['name'] != '')
+            {
+                $orderColumn = null;
+            
+                switch($order['name'])
+                {
+                    case 'agent':   
+                        $orderColumn = 'agent.nom';
+                        break;
+                        
+
+                    case 'code':
+                        $orderColumn = 'agent.code_identification';
+                        break;
+                        
+
+                    case 'code_nom':
+                        $orderColumn = 'agent.code_nom';
+                        break;
+
+                    case 'date_naissance':
+                        $orderColumn = 'agent.date_naissance';
+                        break;
+
+                    case 'specialite':
+                        $orderColumn = 'specialite.nom';
+                        break;    
+
+                    case 'mission':
+                        $orderColumn = 'mission.titre';
+                        break;    
+    
+
+                    case 'nationalite':
+                        $orderColumn = 'pays.nom';
+                        break;                       
+                }
+        
+                if ($orderColumn !== null)
+                {
+                    $query->orderBy($orderColumn, $order['dir']);
+                }
+            }
+        }
+        
+        // Execute
+        $results = $query->getQuery()->getResult();
+        $countResult = $countQuery->getQuery()->getSingleScalarResult();
+        
+        return array(
+            "results" 		=> $results,
+            "countResult"	=> $countResult
+        );
+    }
+
 //    /**
 //     * @return Agent[] Returns an array of Agent objects
 //     */
