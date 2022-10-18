@@ -60,12 +60,12 @@ class ContactRepository extends ServiceEntityRepository
 
         // Create inner joins
         $query
-            ->join('contact.nationalite', 'n')
-            ->join('contact.mission', 'm');
+            ->join('contact.nationalite', 'pays')
+            ->join('contact.mission', 'mission');
         
         $countQuery
-            ->join('contact.nationalite', 'n')
-            ->join('contact.mission', 'm');
+            ->join('contact.nationalite', 'pays')
+            ->join('contact.mission', 'mission');
         
         // Other conditions than the ones sent by the Ajax call ?
         if ($otherConditions === null)
@@ -108,13 +108,13 @@ class ContactRepository extends ServiceEntityRepository
 
                     case 'mission':
                         {
-                            $searchQuery = 'm.titre LIKE \'%'.$searchItem.'%\'';
+                            $searchQuery = 'mission.titre LIKE \'%'.$searchItem.'%\'';
                             break;
                         }
 
                     case 'nationalite':
                         {
-                            $searchQuery = 'p.nom LIKE \'%'.$searchItem.'%\'';
+                            $searchQuery = 'pays.nom LIKE \'%'.$searchItem.'%\'';
                             break;
                         }
 
@@ -157,11 +157,11 @@ class ContactRepository extends ServiceEntityRepository
                         break;
 
                     case 'pays':
-                        $orderColumn = 'p.nom';
+                        $orderColumn = 'pays.nom';
                         break;    
 
                     case 'mission':
-                        $orderColumn = 'm.titre';
+                        $orderColumn = 'mission.titre';
                         break;                       
                 }
         
