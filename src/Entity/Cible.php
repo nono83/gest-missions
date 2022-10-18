@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+// Import avec un alias afin de réduire la verbosité de nos validations
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CibleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Cible
 {
-    /**
+     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -19,32 +21,46 @@ class Cible
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Le nom est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le nom ne peut être vide.")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(
+     *     max = 50,
+     *     maxMessage = "Le prénom est trop long"
+     * )
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      */
     private $date_naissance;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Length(
+     *     max = 100,
+     *     maxMessage = "Le code est trop long"
+     * )
+     * @Assert\NotBlank(message = "Le code ne peut être vide.")
      */
     private $nom_code;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pays::class, inversedBy="cibles")
+     * @ORM\ManyToOne(targetEntity=Pays::class, inversedBy="contacts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $nationalite;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="cibles")
+     * @ORM\ManyToOne(targetEntity=Mission::class, inversedBy="contacts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $mission;

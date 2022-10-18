@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition de la Cible{% endblock %}
+
+{% block content %}
+    <h1>Edition de la Cible</h1>
+
+    {{ include('cible/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+
+    <a href="{{ path('app_cible_index') }}">Retour à la liste</a>
+
+{% endblock %}

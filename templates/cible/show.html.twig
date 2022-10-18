@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cible{% endblock %}
+
+{% block body %}
+    <h1>Cible</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cible.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ cible.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ cible.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Date_naissance</th>
+                <td>{{ cible.dateNaissance ? cible.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom_code</th>
+                <td>{{ cible.nomCode }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cible_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('app_cible_edit', {'id': cible.id}) }}">Editer</a>
+{% endblock %}
