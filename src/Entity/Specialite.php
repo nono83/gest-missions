@@ -31,21 +31,20 @@ class Specialite
      */
     private $nom;
 
-
-    /**
-     * @ORM\OneToMany(targetEntity=AgentSpecialite::class, mappedBy="specialite")
-     */
-    private $agentSpecialites;
-
     /**
      * @ORM\OneToMany(targetEntity=Mission::class, mappedBy="specialite")
      */
     private $missions;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Agent::class, mappedBy="specialites")
+     */
+    private $agents;
+
     public function __construct()
     {
-        $this->agentSpecialites = new ArrayCollection();
         $this->missions = new ArrayCollection();
+        $this->agents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,35 +64,6 @@ class Specialite
         return $this;
     }
 
-    /**
-     * @return Collection<int, AgentSpecialite>
-     */
-    public function getAgentSpecialites(): Collection
-    {
-        return $this->agentSpecialites;
-    }
-
-    public function addAgentSpecialite(AgentSpecialite $agentSpecialite): self
-    {
-        if (!$this->agentSpecialites->contains($agentSpecialite)) {
-            $this->agentSpecialites[] = $agentSpecialite;
-            $agentSpecialite->setSpecialite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgentSpecialite(AgentSpecialite $agentSpecialite): self
-    {
-        if ($this->agentSpecialites->removeElement($agentSpecialite)) {
-            // set the owning side to null (unless already changed)
-            if ($agentSpecialite->getSpecialite() === $this) {
-                $agentSpecialite->setSpecialite(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Mission>
@@ -125,5 +95,31 @@ class Specialite
         return $this;
     }
 
+    /**
+     * @return Collection<int, Agent>
+     */
+    public function getAgents(): Collection
+    {
+        return $this->agents;
+    }
+
+    public function addAgent(Agent $agent): self
+    {
+        if (!$this->agents->contains($agent)) {
+            $this->agents[] = $agent;
+            $agent->addSpecialite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgent(Agent $agent): self
+    {
+        if ($this->agents->removeElement($agent)) {
+            $agent->removeSpecialite($this);
+        }
+
+        return $this;
+    }
     
 }
