@@ -42,21 +42,21 @@ class Pays
     private $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Agent::class, mappedBy="nationalite")
-     */
-    private $agents;
-
-    /**
      * @ORM\OneToMany(targetEntity=Mission::class, mappedBy="pays")
      */
     private $missions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Agent::class, mappedBy="nationalite")
+     */
+    private $agents;
 
     public function __construct()
     {
         $this->cibles = new ArrayCollection();
         $this->contacts = new ArrayCollection();
-        $this->agents = new ArrayCollection();
         $this->missions = new ArrayCollection();
+        $this->agents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,35 +136,7 @@ class Pays
         return $this;
     }
 
-    /**
-     * @return Collection<int, Agent>
-     */
-    public function getAgents(): Collection
-    {
-        return $this->agents;
-    }
-
-    public function addAgent(Agent $agent): self
-    {
-        if (!$this->agents->contains($agent)) {
-            $this->agents[] = $agent;
-            $agent->setNationalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgent(Agent $agent): self
-    {
-        if ($this->agents->removeElement($agent)) {
-            // set the owning side to null (unless already changed)
-            if ($agent->getNationalite() === $this) {
-                $agent->setNationalite(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Mission>
@@ -190,6 +162,36 @@ class Pays
             // set the owning side to null (unless already changed)
             if ($mission->getPays() === $this) {
                 $mission->setPays(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Agent>
+     */
+    public function getAgents(): Collection
+    {
+        return $this->agents;
+    }
+
+    public function addAgent(Agent $agent): self
+    {
+        if (!$this->agents->contains($agent)) {
+            $this->agents[] = $agent;
+            $agent->setNationalite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgent(Agent $agent): self
+    {
+        if ($this->agents->removeElement($agent)) {
+            // set the owning side to null (unless already changed)
+            if ($agent->getNationalite() === $this) {
+                $agent->setNationalite(null);
             }
         }
 

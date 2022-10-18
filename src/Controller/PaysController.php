@@ -26,7 +26,7 @@ class PaysController extends AbstractController
         ]);
     }
 
-/**
+    /**
      * @Route("/list_datatables", name="app_pays_list_datatables")
      */
     public function listDatatablesAction(Request $request,PaysRepository $paysRepository): Response
