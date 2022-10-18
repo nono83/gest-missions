@@ -73,11 +73,6 @@ class Mission
     private $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Agent::class, mappedBy="mission")
-     */
-    private $agents;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Pays::class, inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -100,6 +95,11 @@ class Mission
      * @ORM\JoinColumn(nullable=false)
      */
     private $specialite;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Agent::class, mappedBy="missions")
+     */
+    private $agents;
 
     public function __construct()
     {
@@ -264,35 +264,7 @@ class Mission
         return $this;
     }
 
-    /**
-     * @return Collection<int, Agent>
-     */
-    public function getAgents(): Collection
-    {
-        return $this->agents;
-    }
-
-    public function addAgent(Agent $agent): self
-    {
-        if (!$this->agents->contains($agent)) {
-            $this->agents[] = $agent;
-            $agent->setMission($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAgent(Agent $agent): self
-    {
-        if ($this->agents->removeElement($agent)) {
-            // set the owning side to null (unless already changed)
-            if ($agent->getMission() === $this) {
-                $agent->setMission(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getPays(): ?Pays
     {
@@ -338,6 +310,33 @@ class Mission
     public function setSpecialite(?Specialite $specialite): self
     {
         $this->specialite = $specialite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Agent>
+     */
+    public function getAgents(): Collection
+    {
+        return $this->agents;
+    }
+
+    public function addAgent(Agent $agent): self
+    {
+        if (!$this->agents->contains($agent)) {
+            $this->agents[] = $agent;
+            $agent->addMission($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgent(Agent $agent): self
+    {
+        if ($this->agents->removeElement($agent)) {
+            $agent->removeMission($this);
+        }
 
         return $this;
     }
