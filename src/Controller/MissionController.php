@@ -194,8 +194,15 @@ class MissionController extends AbstractController
     /**
      * @Route("/{id}", name="app_mission_show", methods={"GET"})
      */
-    public function show(Mission $mission): Response
+    public function show(int $id, MissionRepository $missionRepository): Response
     {
+         //A mettre en commentaire si appel au paramconverter config/packages/sensio_framework_extra.yaml
+         $mission = $missionRepository->findOneBy(['id' => $id]);
+         if (!$mission) {
+             throw $this->createNotFoundException(
+                 'Aucune mission pour l\'id: ' . $id
+             );
+         }
         return $this->render('mission/show.html.twig', [
             'mission' => $mission,
         ]);
@@ -230,7 +237,7 @@ class MissionController extends AbstractController
     }
 
     /**
-     * @Route("/remove/{id}", requirements={"id"="\d+"}, methods={"GET", "POST"}, name="app_mission_delete", methods={"POST"})
+     * @Route("/remove/{id}", requirements={"id"="\d+"}, methods={"GET", "POST"}, name="app_mission_delete")
      */
     public function delete(Request $request, int $id, MissionRepository $missionRepository): Response
     {

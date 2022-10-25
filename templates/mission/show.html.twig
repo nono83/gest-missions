@@ -3,14 +3,10 @@
 {% block title %}Mission{% endblock %}
 
 {% block content %}
-    <h1>Mission</h1>
+    <h1>Fiche Mission</h1>
 
-    <table class="table">
+ <table class="table mt-5">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ mission.id }}</td>
-            </tr>
             <tr>
                 <th>Titre</th>
                 <td>{{ mission.titre }}</td>
@@ -21,22 +17,68 @@
             </tr>
             <tr>
                 <th>Nom de code</th>
-                <td>{{ mission.nomCode }}</td>
+                <td>{{ mission.nomCode  }}</td>
             </tr>
             <tr>
                 <th>Date de début</th>
-                <td>{{ mission.dateDebut ? mission.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ mission.dateDebut ? mission.dateDebut|date('d-m-Y') : ''  }}</td>
             </tr>
             <tr>
                 <th>Date de fin</th>
-                <td>{{ mission.dateFin ? mission.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ mission.dateFin ? mission.dateFin|date('d-m-Y') : ''  }}</td>
             </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ mission.pays  }}</td>
+            </tr>
+            <tr>
+                <th>Type de mission</th>
+                <td>{{ mission.typeMission  }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ mission.statut  }}</td>
+            </tr>
+            <tr>
+                <th>Spécialité</th>
+                <td>{{ mission.specialite  }}</td>
+            </tr>
+             <tr>
+                <th>Planques</th>
+                <td>
+                     {% for planque in mission.planques %}
+                        {{ planque  }}  <br> 
+                    {% endfor %}
+                 </td>
+            </tr>
+            <tr>
+                <th>Contacts</th>
+                <td>
+                     {% for contact in mission.contacts %}
+                        {{ contact  }} <br> 
+                    {% endfor %}
+                 </td>
+            </tr>
+            <tr>
+                <th>Cibles</th>
+                <td>
+                     {% for cible in mission.cibles %}
+                        {{ cible  }} <br>
+                    {% endfor %}
+                 </td>
+            </tr>
+            <tr>
+                <th>Agents</th>
+                <td>
+                     {% for agent in mission.agents %}
+                        {{ agent  }} <br>
+                    {% endfor %}
+                 </td>
+            </tr>
+           
         </tbody>
     </table>
 
-    <a href="{{ path('app_mission_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_home') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_mission_edit', {'id': mission.id}) }}">edit</a>
-
-    {{ include('mission/_delete_form.html.twig') }}
 {% endblock %}
