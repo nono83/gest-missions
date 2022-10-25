@@ -20,6 +20,7 @@ class PlanqueType extends AbstractType
             ->add('code', TextType::class, [
                 'help' => "Le nom de code de la planque",
                 'label' => 'Nom du code*',
+                'attr' => array('class' => 'field-width'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut être vide'
@@ -29,6 +30,7 @@ class PlanqueType extends AbstractType
             ->add('adresse', TextType::class, [
                 'help' => "Adresse de la planque",
                 'label' => 'Adresse*',
+                'attr' => array('class' => 'field-width'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut être vide'
@@ -38,10 +40,22 @@ class PlanqueType extends AbstractType
             ->add('type_planque', EntityType::class, [
                 'class' => TypePlanque::class,
                 'choice_label' => 'nom', 
+                'attr' => array('class' => 'field-width'),
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut être vide'
+                    ])
+                ]
             ])
             ->add('mission', EntityType::class, [
                 'class' => Mission::class,
                 'choice_label' => 'titre', 
+                'attr' => array('class' => 'field-width'),
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champ ne peut être vide'
+                    ])
+                ]
             ])
         ;
     }

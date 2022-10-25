@@ -17,6 +17,7 @@ class SpecialiteType extends AbstractType
             ->add('nom', TextType::class, [
                 'help' => "Le nom de la spécialité",
                 'label' => 'Spécialité*',
+                'attr' => array('class' => 'field-width'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut être vide'

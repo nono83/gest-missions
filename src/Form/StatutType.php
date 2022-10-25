@@ -18,6 +18,7 @@ class StatutType extends AbstractType
             ->add('nom', TextType::class, [
                 'help' => "Le nom du statut",
                 'label' => 'Statut*',
+                'attr' => array('class' => 'field-width'),
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Ce champ ne peut être vide'

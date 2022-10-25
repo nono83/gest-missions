@@ -16,6 +16,7 @@ class TypeMissionType extends AbstractType
         $builder->add('nom', TextType::class, [
             'help' => "Le nom de la type de mission",
             'label' => 'Type de mission*',
+            'attr' => array('class' => 'field-width'),
             'constraints' => [
                 new NotBlank([
                     'message' => 'Ce champ ne peut être vide'

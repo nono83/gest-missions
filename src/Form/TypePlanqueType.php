@@ -16,6 +16,7 @@ class TypePlanqueType extends AbstractType
         $builder->add('nom', TextType::class, [
             'help' => "Le nom de la type de planque",
             'label' => 'Type de planque*',
+            'attr' => array('class' => 'field-width'),
             'constraints' => [
                 new NotBlank([
                     'message' => 'Ce champ ne peut être vide'
