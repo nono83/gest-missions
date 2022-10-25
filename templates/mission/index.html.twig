@@ -8,11 +8,11 @@
     .dataTables_filter {
         display: none;
     }
-
+    
     /* Déplace les balises tfoot en faut du datatable */
-    tfoot {
+   tfoot {
         display: table-header-group;
-    }
+    } 
     </style>
 {% endblock %}
 {% block content %}
@@ -82,99 +82,98 @@
         </tbody>
     </table>
 
-        <script src='https://code.jquery.com/jquery-3.5.1.js'> </script>
-        <script src='https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js'></script>
-        <script src='https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js'></script>
-        <script>
-            $(document).ready(function () {
-            // Add a text input to each footer cell
-                var pos = 1;
-                $('#liste tfoot th').each( function () {
-                    //La colonne action n'est pas prise en compte pour l'ajout d'un champs de recherche
-                    if(pos!=$('#liste tfoot th').length){
-                        var title = $(this).text();
-                        $(this).html( "<input id='input" + pos + "' type='text' class='form-control' placeholder='&#x1F50D;' style='font-family:Arial, FontAwesome; width:100%'/>" );
-                    }
-                    pos ++;
-                });
-
-                var table=$('#liste').DataTable({
-                     "columnDefs": [
-                        // These are the column name variables that will be sent to the server
-                        { "name": "id",   "targets": 0 },
-                        { "name": "titre",   "targets": 1 }, 
-                        { "name": "nom_code",   "targets": 2 }, 
-                        { "name": "statut",   "targets": 3 }, 
-                        { "name": "date_debut",   "targets": 4 }, 
-                        { "name": "date_fin",   "targets": 5 },
-                        { "name": "pays",   "targets": 6 },
-                        { "name": "action",   "targets": 7,"render": function ( data, type, row ) {
-                         return '<div style="white-space:nowrap;"><a href="/mission/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/mission/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
-                        } }, 
-                    ],
-                    
-                     // parametres Server-side 
-                    "processing": true,
-                    "serverSide": true,
-                    // Appel Ajax 
-                    "ajax": {
-                        "url": "{{ path('app_mission_list_datatables') }}",
-                        "type": "POST"
-                    },
-                     buttons: [
-                        'copy', 'excel', 'pdf'
-                    ],
-                    // Paramétres de la datatables
-                    "paging" : true,
-                    "info" : true, 
-                    "searching": true,
-                    "responsive": true,
-                    "pageLength": 10,
-                    "scrollX" : true,
-                    "order": [[1, 'asc']],
-                    //traduction
-                    "language": {
-                        "lengthMenu": "Affiche _MENU_ enregistrements par page",
-                        "zeroRecords": "Aucun enregistrement ",
-                        "info": "Page _PAGE_ sur _PAGES_",
-                        "infoEmpty": "Aucun enregistrement disponible",
-                        "infoFiltered": "(Filtrés sur _MAX_ enregistrements total)",
-                        "loadingRecords": "Chargement...",
-                        "search": "Recherche:",
-                        "zeroRecords":    "Aucun enregistrement trouvé",
-                        "paginate": {
-                            "first": "Premier",
-                            "last":  "Dernier",
-                            "next":  "Suivant",
-                            "previous":"Précédent"
-                        },
-                        "aria": {
-                            "sortAscending":  ": activer pour trier dans l'ordre ascendant",
-                            "sortDescending": ": activer pour trier dans l'ordre descendant"
-                        }
-                    }
-                });
-
-                 // Apply the search
-                pos = 1;
-                table.columns().every( function () {
-                    var that = this;
-                
-                    $("#input"+pos).on( 'keyup change', function () {
-                        if ( that.search() !== this.value )
-                        {
-                            that
-                                .search( this.value )
-                                .draw();
-                        }
-                    });
-                    pos++;
-                });
-
-                function reloadDatatables(){
-                    $('#liste').DataTable().ajax.reload();
+    <script src='https://code.jquery.com/jquery-3.5.1.js'> </script>
+    <script src='https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js'></script>
+    <script>
+        $(document).ready(function () {
+        // Add a text input to each footer cell
+            var pos = 1;
+            $('#liste tfoot th').each( function () {
+                //La colonne action n'est pas prise en compte pour l'ajout d'un champs de recherche
+                if(pos!=$('#liste tfoot th').length){
+                    var title = $(this).text();
+                    $(this).html( "<input id='input" + pos + "' type='text' class='form-control' placeholder='&#x1F50D;' style='font-family:Arial, FontAwesome; width:100%'/>" );
                 }
-            }); 
-        </script>
+                pos ++;
+            });
+
+            var table=$('#liste').DataTable({
+                    "columnDefs": [
+                    // These are the column name variables that will be sent to the server
+                    { "name": "id",   "targets": 0 },
+                    { "name": "titre",   "targets": 1 }, 
+                    { "name": "nom_code",   "targets": 2 }, 
+                    { "name": "statut",   "targets": 3 }, 
+                    { "name": "date_debut",   "targets": 4 }, 
+                    { "name": "date_fin",   "targets": 5 },
+                    { "name": "pays",   "targets": 6 },
+                    { "name": "action",   "targets": 7,"render": function ( data, type, row ) {
+                        return '<div style="white-space:nowrap;"><a href="/mission/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/mission/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
+                    } }, 
+                ],
+                
+                    // parametres Server-side 
+                "processing": true,
+                "serverSide": true,
+                // Appel Ajax 
+                "ajax": {
+                    "url": "{{ path('app_mission_list_datatables') }}",
+                    "type": "POST"
+                },
+                    buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
+                // Paramétres de la datatables
+                "paging" : true,
+                "info" : true, 
+                "searching": true,
+                "responsive": true,
+                "pageLength": 10,
+                "order": [[1, 'asc']],
+                //traduction
+                "language": {
+                    "lengthMenu": "Affiche _MENU_ enregistrements par page",
+                    "zeroRecords": "Aucun enregistrement ",
+                    "info": "Page _PAGE_ sur _PAGES_",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(Filtrés sur _MAX_ enregistrements total)",
+                    "loadingRecords": "Chargement...",
+                    "search": "Recherche:",
+                    "zeroRecords":    "Aucun enregistrement trouvé",
+                    "paginate": {
+                        "first": "Premier",
+                        "last":  "Dernier",
+                        "next":  "Suivant",
+                        "previous":"Précédent"
+                    },
+                    "aria": {
+                        "sortAscending":  ": activer pour trier dans l'ordre ascendant",
+                        "sortDescending": ": activer pour trier dans l'ordre descendant"
+                    }
+                }
+            });
+
+                // Apply the search
+            pos = 1;
+            table.columns().every( function () {
+                var that = this;
+            
+                $("#input"+pos).on( 'keyup change', function () {
+                    if ( that.search() !== this.value )
+                    {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                });
+                pos++;
+            });
+
+            function reloadDatatables(){
+                $('#liste').DataTable().ajax.reload();
+            }
+        }); 
+    </script>
 
 {% endblock %}
