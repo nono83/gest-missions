@@ -92,6 +92,7 @@ class Planque
         return $this;
     }
 
+
     public function getMission(): ?Mission
     {
         return $this->mission;
@@ -102,5 +103,9 @@ class Planque
         $this->mission = $mission;
 
         return $this;
+    }
+
+    public function __toString() {
+        return sprintf('%s - %s %s',$this->code, $this->type_planque,$this->adresse);
     }
 }
