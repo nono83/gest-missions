@@ -81,7 +81,7 @@
         {% endfor %} #}
         </tbody>
     </table>
-
+    
     <script src='https://code.jquery.com/jquery-3.5.1.js'> </script>
     <script src='https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js'></script>
     <script src='https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js'></script>
@@ -113,7 +113,7 @@
                     } }, 
                 ],
                 
-                    // parametres Server-side 
+                // parametres Server-side 
                 "processing": true,
                 "serverSide": true,
                 // Appel Ajax 
@@ -130,7 +130,6 @@
                 "searching": true,
                 "responsive": true,
                 "pageLength": 10,
-                "scrollX" : true,
                 "order": [[1, 'asc']],
                 //traduction
                 "language": {
@@ -155,7 +154,7 @@
                 }
             });
 
-                // Apply the search
+            // Apply the search
             pos = 1;
             table.columns().every( function () {
                 var that = this;
@@ -169,11 +168,14 @@
                     }
                 });
                 pos++;
-            });
+            });  
 
             function reloadDatatables(){
                 $('#liste').DataTable().ajax.reload();
             }
+
+
+
         }); 
     </script>
 
