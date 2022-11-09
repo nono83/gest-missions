@@ -19,6 +19,7 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 gest-missions/
+<<<<<<< Updated upstream
 methode projet.docx
 methode.docx
 migrations/Version20221004131551.php
@@ -26,3 +27,14 @@ migrations/Version20221004152301.php
 ~$ethode.docx
 ~$thode projet.docx
 ~WRL1098.tmp
+=======
+.env
+.env
+migrations/Version20221004131551.php
+migrations/Version20221004152301.php
+~WRL1098.tmp
+~$thode projet.docx
+~$ethode.docx
+methode projet.docx
+methode.docx
+>>>>>>> Stashed changes
