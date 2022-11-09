@@ -21,6 +21,23 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/mission/{id}", name="app_mission_show", methods={"GET"})
+     */
+    public function show(int $id, MissionRepository $missionRepository): Response
+    {
+         //A mettre en commentaire si appel au paramconverter config/packages/sensio_framework_extra.yaml
+         $mission = $missionRepository->findOneBy(['id' => $id]);
+         if (!$mission) {
+             throw $this->createNotFoundException(
+                 'Aucune mission pour l\'id: ' . $id
+             );
+         }
+        return $this->render('mission/show.html.twig', [
+            'mission' => $mission,
+        ]);
+    }
+
      /**
      * @Route("/list_datatables", name="app_mission_list_datatables_index")
      */
