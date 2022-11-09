@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/mission/{id}", name="app_mission_show", methods={"GET"})
+     * @Route("/mission/{id}", name="app_mission_index_show", methods={"GET"})
      */
     public function show(int $id, MissionRepository $missionRepository): Response
     {
