@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/planque")
+ * @Route("/admin/planque")
  */
 class PlanqueController extends AbstractController
 {

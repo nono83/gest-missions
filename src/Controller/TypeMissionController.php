@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/type-mission")
+ * @Route("/admin/type-mission")
  */
 class TypeMissionController extends AbstractController
 {

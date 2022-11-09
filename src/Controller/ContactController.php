@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/contact")
+ * @Route("/admin/contact")
  */
 class ContactController extends AbstractController
 {

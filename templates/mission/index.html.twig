@@ -109,7 +109,7 @@
                     { "name": "date_fin",   "targets": 5 },
                     { "name": "pays",   "targets": 6 },
                     { "name": "action",   "targets": 7,"render": function ( data, type, row ) {
-                        return '<div style="white-space:nowrap;"><a href="/mission/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/mission/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
+                        return '<div style="white-space:nowrap;"><a href="/admin/mission/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/admin/mission/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
                     } }, 
                 ],
                 

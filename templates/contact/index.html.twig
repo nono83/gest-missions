@@ -106,7 +106,7 @@
                     { "name": "code",   "targets": 4 }, 
                     { "name": "mission",   "targets": 5 },
                     { "name": "action",   "targets": 6,"render": function ( data, type, row ) {
-                        return '<div style="white-space:nowrap;"><a href="/contact/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/contact/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
+                        return '<div style="white-space:nowrap;"><a href="/admin/contact/remove/' + row[0] + '" role="button" class="btn btn-danger" onclick="return confirm(\'Confirmez vous la suppression de cet enregistrement ?\');reloadDatatables();"><i class="fa-solid fa-trash"></i></a>&nbsp&nbsp<a href="/admin/contact/edit/' + row[0] + '" role="button" class="btn btn-info" ><i class="fa-solid fa-pencil fa-xs"></i> </a></div>';
                     } }, 
                 ],
                 
